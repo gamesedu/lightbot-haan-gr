@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LightBot Editor v0.1-jmod009_(20150712-play map on the fly _POST version)</title>
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link type="text/css" href="lib/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+        <link type="text/css" href="css/lightbot.css" rel="stylesheet"/>
+        <script type="text/javascript" src="lib/jquery-1.6.4.js"></script>
+        <script type="text/javascript" src="lib/jquery-ui-1.8.16.custom.js"></script>
+        <script type="text/javascript" src="lib/underscore.js"></script>
+        <script type="text/javascript" src="js/new_lightbot_editor.js"></script>
+		
+		
+		<script type="text/javascript">
+		//+++++++++++++++++++++++ //JON20150712 -Set method to post by default if not specified.
+		// call it : post('/contact/', {name: 'Johnny Bravo'});
+		function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+	form.target = '_blank';
+    form.submit();
+}
+//---------------------------------- //JON20150712 -Set method to post by default if not specified.
+		</script>
+		
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var lightbot_editor = new lightbot.LightBotEditor($("#gameCanvas"));
+                lightbot_editor.start();
+
+                $("#rotate-left").click(function() {
+                    lightbot_editor.rotateLeft();
+                });
+
+                $("#rotate-right").click(function() {
+                    lightbot_editor.rotateRight();
+                });
+
+                $("#increase-height").click(function() {
+                    lightbot_editor.incHeight();
+                });
+
+                $("#decrease-height").click(function() {
+                    lightbot_editor.decHeight();
+                });
+
+                $("#toggle-light").click(function() {
+                    lightbot_editor.toggleLight();
+                });
+
+                $("#width-slider").slider({
+                    min: 5,
+                    max: 10,
+                    value: 5,
+                    slide: function(event, info) {
+                        lightbot_editor.changeWidth(info.value);
+                    }
+                });
+
+                $("#height-slider").slider({
+                    min: 5,
+                    max: 10,
+                    value: 6,
+                    orientation: "vertical",
+                    slide: function(event, info) {
+                        lightbot_editor.changeHeight(info.value);
+                    }
+                });
+
+                 $('#horizontal_rotation_inc').click(function(){
+                  lightbot.IsometricProjection.horizontalRotationAngle -= 5;
+                     lightbot_editor.redraw();
+                });
+
+                $('#horizontal_rotation_dec').click(function(){
+                  lightbot.IsometricProjection.horizontalRotationAngle += 5;
+                    lightbot_editor.redraw();
+                });
+
+                $('#vertical_rotation_inc').click(function(){
+                  lightbot.IsometricProjection.verticalRotationAngle += 5;
+                    lightbot_editor.redraw();
+                });
+
+                $('#vertical_rotation_dec').click(function(){
+                  lightbot.IsometricProjection.verticalRotationAngle -= 5;
+                    lightbot_editor.redraw();
+                });
+
+                $('#view_map_button').click(function(){
+                  $("#dialogMapData").val(lightbot_editor.retrieveMap());
+                  $("div#levelDisplay").dialog('open');
+                });
+				// ++++++++ jon 20150711 ++++++++++++++++++++++
+                $('#play_map_button').click(function(){
+                  $("#dialogMapData").val(lightbot_editor.retrieveAndOpenMap());
+                  $("div#levelDisplay").dialog('open');
+				  //window.open("../index_custom_map.php?map_data="+'hello');
+				  //window.open("../index_custom_map.php?map_data="+(lightbot_editor.retrieveAndOpenMap())); //ok working LOCALHOST
+				  var map_data_for_testing=lightbot_editor.retrieveAndOpenMap();
+				  post('../index_custom_map.php', {map_data: map_data_for_testing});
+				  //post('../test.php', {map_data: map_data_for_testing});
+                });				
+				// --------------jon 20150711 -----------------------------------
+                $('#enter_map_button').click(function(){
+                  $("#dialogInputData").val("");
+                  $("div#levelInput").dialog('open');
+                });
+
+                // dialogs
+                $("div#levelDisplay").dialog({
+                  autoOpen: false,
+                  modal: true,
+                  width: 410,
+                  height: 220,
+                  draggable: false,
+                  resizable: false,
+                  buttons: {
+                    Ok: function() {
+                      $(this).dialog("close");
+                    }
+                  }
+                });
+                $("div#levelInput").dialog({
+                  autoOpen: false,
+                  modal: true,
+                  width: 410,
+                  height: 220,
+                  draggable: false,
+                  resizable: false,
+                  buttons: {
+                    Ok: function() {
+                      $(this).dialog("close");
+                        lightbot_editor.loadNewMap($("#dialogInputData").val());
+                    },
+                    Cancel: function() {
+                      $(this).dialog("close");
+                    }
+                  }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="lightbot_editor">
+            <div id="credits">Original concept by <a href="http://coolio-niato.newgrounds.com/" target="_blank">coolio niato</a>.
+                Development by <a href="http://www.haan.lu" target="_blank">Laurent Haan</a>. Sprite by <a
+                        href="http://www.pixeljoint.com/forum/member_profile.asp?PF=2146">surt</a>. Interface by <a
+                        href="http://zenobiahoman.daportfolio.com/">Zenobia Homan</a>. Music by <a
+                        href="http://hektikmusic.newgrounds.com/" target="_blank">hektikmusic</a>.
+            </div>
+
+            <div id="editorScreen" class="ui-screen">
+                <div id="canvasContainer">
+                    <canvas id="gameCanvas" width="690" height="655" />
+                </div>
+                <div id="buttonContainer">
+                    <button id="enter_map_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button" aria-disabled="false">
+                        <span class="ui-button-icon-primary ui-icon ui-icon-folder-open"></span><span class="ui-button-text">Enter Map</span>
+                    </button>
+
+                    <button id="view_map_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button" aria-disabled="false">
+                        <span class="ui-button-icon-primary ui-icon ui-icon-disk"></span><span class="ui-button-text">View Map Data</span>
+                    </button>
+					<!-- added by jon 20150711 play_map_button -->
+                    <button id="play_map_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button" aria-disabled="false">
+                        <span class="ui-button-icon-primary ui-icon ui-icon-disk"></span><span class="ui-button-text">play Map Data </span>
+                    </button>			
+					<!-- added by jon 20150711 play_map_button (END) -->	
+                    <button id="horizontal_rotation_inc" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false">
+                      <span class="ui-button-icon-primary ui-icon ui-icon-arrowthick-1-n"></span>
+                      <span class="ui-button-text">Increase rotation around horizontal axis</span>
+                    </button>
+                    <button id="horizontal_rotation_dec" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false">
+                      <span class="ui-button-icon-primary ui-icon ui-icon-arrowthick-1-s"></span>
+                      <span class="ui-button-text">Increase rotation around horizontal axis</span>
+                    </button>
+                    <button id="vertical_rotation_inc" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false">
+                      <span class="ui-button-icon-primary ui-icon ui-icon-arrowthick-1-w"></span>
+                      <span class="ui-button-text">Increase rotation around vertical axis</span>
+                    </button>
+                    <button id="vertical_rotation_dec" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false">
+                      <span class="ui-button-icon-primary ui-icon ui-icon-arrowthick-1-e"></span>
+                      <span class="ui-button-text">Decrease rotation around vertical axis</span>
+                    </button>
+                </div>
+                <div id="instructionsContainer">
+                    <h1 class="ui-widget-header">Map Settings</h1>
+                    <div>
+                        <img id="rotate-left" src="img/rotate-left.png" alt="rotate map left"/>
+                        <img id="rotate-right" src="img/rotate-right.png" alt="rotate map right" style="float:right" />
+                    </div>
+                    <div>
+                        <div id="width-slider" class="vslider"/>
+                    </div>
+                    <div>
+                        <img id="increase-height" src="img/up-level.png" alt="rotate map left"/>
+                        <img id="toggle-light" src="img/light_bulb.png" alt="toggle light"/>
+                        <img id="decrease-height" src="img/down-level.png" alt="rotate map right" />
+                        <div id="height-slider" class="hslider" />
+                    </div>
+                </div>
+            </div>
+            <div id="levelDisplay" title="Map Data">
+              <div>
+                  <textarea id="dialogMapData" rows="8" cols="60"></textarea>
+              </div>
+            </div>
+            <div id="levelInput" title="Enter Map Data">
+              <div>
+                  <textarea id="dialogInputData" rows="8" cols="60"></textarea>
+              </div>
+            </div>
+        </div>
+    </body>
+</html>
