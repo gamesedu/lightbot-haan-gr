@@ -1,0 +1,7 @@
+
+h: height  , t: tile (b=blank , l=light)
+{"h":1, "t":"l"}
+{"h":5, "t":"b"}
+
+Each line is down-left to up-right /
+[{"h":2, "t":"b"}, {"h":1, "t":"b"},{"h":1, "t":"b"},...
