@@ -4,6 +4,13 @@ This is an attempt to translate lightbot (github haan version) to Greek for elem
 lightbot-editor: Levels are actually rotated in the main game...
 
 
+
+Main game:
+changes 190205 
+- maps are hardcoded in html.No server required (eg http://.../lightbot_haan/index.html?map=maps_d1.txt)
+
+
+
 Files:
 
 index_easy.html : play easy levels
@@ -15,3 +22,13 @@ create_many_maps4x4.php : create many small maps 4x4
 create_many_maps4x4loop.php : (not finished) create many loop maps
 
 
+Sample maps:
+
+index.html?maps=maps.txt
+index.html?maps=maps_nax.txt
+index.html?maps=maps_easy.txt
+index.html?maps=maps_d1.txt
+index.html?maps=maps_random_2(4x4_3lights).txt
+index.html?maps=maps_random_1(4x4_3lights).txt
+index.html?maps=maps_random_2(5lights).txt
+index.html?maps=maps_random_3(5lights).txt
