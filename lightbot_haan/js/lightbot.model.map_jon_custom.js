@@ -13,15 +13,20 @@
 
 
   map.loadMaps = function() {
-   // <?php echo "$.getJSON('maps/".$map_file."', function(data){"; ?>
-   //<?php //echo "$.getJSON('maps/maps.txt', function(data){"; ?>
     //$.getJSON('maps/maps.txt', function(data){  //ORIG line   
     
     //if (map_file==null) map_file="maps.txt";
-
+    /*
     $.getJSON('maps/'+map_file, function(data){
       maps = data;
     });
+    */
+
+    $.getJSON('maps/'+map_file)
+    .done(function (data) { maps = data; /* success -map file exists*/ })
+    .fail(function (jqXHR, textStatus, errorThrown) { $.getJSON('maps/maps.txt', function(data){maps = data;  });  
+    /* error */ });
+
   };
 
   map.loadMap = function(x) {
