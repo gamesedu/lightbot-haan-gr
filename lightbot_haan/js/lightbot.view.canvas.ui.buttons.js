@@ -73,7 +73,7 @@ $(document).ready(function() {
       lightBot.bot.queueInstructions(instructions);
       lightBot.bot.execute();
 
-      $(this).button('option', {label: 'Διακοπή', icons: {primary: 'ui-icon-stop'}}).addClass('ui-state-highlight');
+      $(this).button('option', {label: 'Διακοπή-Επαναφορά', icons: {primary: 'ui-icon-stop'}}).addClass('ui-state-highlight');
     }
   });
 
