@@ -6,6 +6,8 @@ lightbot-editor: Levels are actually rotated in the main game...
 
 
 Main game:
+changes 190210
+- maps_loops_only1.txt added
 changes 190205 
 - maps are hardcoded in html.No server required (eg http://.../lightbot_haan/index.html?map=maps_d1.txt)
 
@@ -30,5 +32,6 @@ index.html?maps=maps_easy.txt
 index.html?maps=maps_d1.txt
 index.html?maps=maps_random_2(4x4_3lights).txt
 index.html?maps=maps_random_1(4x4_3lights).txt
+index.html?map=maps_loops_only1.txt
 index.html?maps=maps_random_2(5lights).txt
 index.html?maps=maps_random_3(5lights).txt

@@ -1,3 +1,7 @@
+
+<h2> </h2>
+
+<hr>
 <a href=index.php?map=maps.txt >maps </a><br>
 <a href=index.php?map=maps_nax.txt >maps_nax </a><br>
 <a href=index.php?map=maps_easy.txt >maps_easy </a><br>
@@ -6,8 +10,8 @@
 <a href=index.php?map=maps_temp.txt >maps_temp </a><br>
 <a href=index.php?map=maps_random_2(5lights).txt >maps_random_2(5lights) </a><br>
 <a href=index.php?map=maps_random_3(5lights).txt >maps_random_3(5lights) </a><br>
+<a href=index.php?map=maps_loops_only1.txt >maps_loops_only1.txt </a><br>
 
-maps_random_3(5lights4x4).txt
 <hr>
 
 
