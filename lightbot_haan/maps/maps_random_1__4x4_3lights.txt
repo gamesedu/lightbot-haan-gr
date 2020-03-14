@@ -1,0 +1,1 @@
+maps_random_1(4x4_3lights).txt
