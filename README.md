@@ -6,6 +6,7 @@ lightbot-editor: Levels are actually rotated in the main game...
 
 
 Main game:
+-200225 google fonts offline loading
 changes 190210
 - maps_loops_only1.txt added
 changes 190205 
